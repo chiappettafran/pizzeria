@@ -1,9 +1,12 @@
 package entities;
-import lombok.*;
-import net.bytebuddy.pool.TypePool;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.HashSet;
 
 
 @Data
@@ -19,4 +22,6 @@ public class Promocion {
     private String descripcionDescuento;
     private Double precioPromocional;
     private TipoPromocion tipoPromocion;
+    private HashSet<Imagen> promoImagen;
+    private HashSet<Articulo> promociones;
 }
