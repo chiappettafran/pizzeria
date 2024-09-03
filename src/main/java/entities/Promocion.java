@@ -1,8 +1,6 @@
 package entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -12,6 +10,8 @@ import java.util.HashSet;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString (exclude = "promociones")
+@Builder
 public class Promocion {
     private long id;
     private String deominacion;
@@ -22,6 +22,10 @@ public class Promocion {
     private String descripcionDescuento;
     private Double precioPromocional;
     private TipoPromocion tipoPromocion;
-    private HashSet<Imagen> promoImagen;
-    private HashSet<Articulo> promociones;
+
+    @Builder.Default
+    private HashSet<Imagen> promoImagen = new HashSet<>();
+
+    @Builder.Default
+    private HashSet<Articulo> promociones = new HashSet<>();
 }

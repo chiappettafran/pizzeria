@@ -1,14 +1,14 @@
 package entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.HashSet;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
+@ToString (exclude = "promocionesArticulo")
 public class Articulo {
     private Long id;
     private String denominacion;
@@ -17,6 +17,8 @@ public class Articulo {
     private Integer stockActual;
     private Integer stockMaximo;
     private Imagen imagen;
-    private HashSet<Promocion> promocionesArticulo;
     private UnidadMedida unidadMedida;
+
+    @Builder.Default
+    private HashSet<Promocion> promocionesArticulo = new HashSet<>();
 }
