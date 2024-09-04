@@ -10,7 +10,7 @@ import java.util.HashSet;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString (exclude = "promociones")
+@ToString (exclude = "articulos")
 @Builder
 public class Promocion {
     private long id;
@@ -27,5 +27,5 @@ public class Promocion {
     private HashSet<Imagen> promoImagen = new HashSet<>();
 
     @Builder.Default
-    private HashSet<Articulo> promociones = new HashSet<>();
+    private HashSet<Articulo> articulos = new HashSet<>();
 }
