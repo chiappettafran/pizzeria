@@ -4,7 +4,8 @@ import lombok.*;
 
 import java.util.HashSet;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

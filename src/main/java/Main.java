@@ -1,9 +1,10 @@
 import entities.*;
 import repositories.InMemoryRepository;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.HashSet;
+import java.util.Optional;
 
 public class Main {
     public static void main(String[] args) {
@@ -70,6 +71,7 @@ public class Main {
         Imagen invierno2 = Imagen.builder()
                 .denominacion("Promo Invierno")
                 .build();
+
         repoImagen.save(imagen1);
         repoImagen.save(imagen2);
         repoImagen.save(imagen3);
@@ -78,6 +80,13 @@ public class Main {
         repoImagen.save(imagen6);
         repoImagen.save(imagen7);
         repoImagen.save(imagen8);
+        repoImagen.save(imaHappy1);
+        repoImagen.save(imaHappy2);
+        repoImagen.save(verano1);
+        repoImagen.save(verano2);
+        repoImagen.save(invierno1);
+        repoImagen.save(invierno2);
+
 
 
         //Crear Articulos
@@ -156,9 +165,12 @@ public class Main {
                 .build();
 
 
+
+
+
         //Creando promociones
         Promocion happyHour = Promocion.builder()
-                .deominacion("Promo Happy Hour Septiembre")
+                .denominacion("Promo Happy Hour Septiembre")
                 .fechaDesde(LocalDate.of(2024, 9, 1))
                 .fechaHasta(LocalDate.of(2024, 9, 30))
                 .horaDesde(LocalTime.of(18, 30))
@@ -166,6 +178,7 @@ public class Main {
                 .descripcionDescuento("Happy Primavera 20%off: Hawaiana 8porc + Muzza 8porc + Quilmes")
                 .tipoPromocion(TipoPromocion.happyHour)
                 .build();
+
         happyHour.getPromoImagen().add(imaHappy1);
         happyHour.getPromoImagen().add(imaHappy2);
         happyHour.getArticulos().add(pizzaGrande1);
@@ -179,7 +192,7 @@ public class Main {
         happyHour.setPrecioPromocional(precio*0.8);
 
         Promocion veranoPromo = Promocion.builder()
-                .deominacion("Promo Verano 2024/2025")
+                .denominacion("Promo Verano 2024/2025")
                 .fechaDesde(LocalDate.of(2024, 12, 1))
                 .fechaHasta(LocalDate.of(2025, 2, 28))
                 .horaDesde(LocalTime.of(0, 0))
@@ -201,7 +214,7 @@ public class Main {
         veranoPromo.setPrecioPromocional(precio*0.75);
 
         Promocion inviernoPromo = Promocion.builder()
-                .deominacion("Promo Invierno 2025")
+                .denominacion("Promo Invierno 2025")
                 .fechaDesde(LocalDate.of(2025, 6, 1))
                 .fechaHasta(LocalDate.of(2025, 8, 31))
                 .horaDesde(LocalTime.of(0, 0))
@@ -234,11 +247,136 @@ public class Main {
         repoPromocion.save(veranoPromo);
         repoPromocion.save(inviernoPromo);
 
+        try {
+            System.out.println("Guardado correcto, prodeceremos con el desarrollo en 5s");
+            pausarPrograma(5);
+            for (int i = 0; i < 50; i++) {
+                System.out.println(); //limpiar consola
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+
+        //Desarrollo del programa
+        System.out.println("Mostrando todas las promociones....");
+        pausarPrograma(2);
+
+        double precioPromocion = 0;
+        long idPromoEconomica = 0;
+        for (Promocion promocion : repoPromocion.findAll()) {
+            System.out.println(promocion.toString());
+
+            if (promocion.getPrecioPromocional() < precioPromocion || idPromoEconomica == 0){
+                precioPromocion = promocion.getPrecioPromocional();
+                idPromoEconomica = promocion.getId();
+            }
+            pausarPrograma(3);
+
+        }
+        for (int i = 0; i < 50; i++) {
+            System.out.println(); //limpiar consola
+        }
+
+        System.out.println("Mostrando todos los articulos....");
+        pausarPrograma(2);
+
+        for (Articulo articulo : repoArticulo.findAll()) {
+            System.out.println(articulo.toString());
+            pausarPrograma(1);
+        }
+        for (int i = 0; i < 50; i++) {
+            System.out.println(); //limpiar consola
+        }
+
+        System.out.println("Mostrando cada promoción por separado, sus articulos relacionados y el precio de venta....");
+        pausarPrograma(2);
+
+        System.out.println("Promoción 1:");
+        Optional<Promocion> promocionMuestra = repoPromocion.findById(1L);
+        promocionMuestra.ifPresent(promocion -> System.out.println(promocion.getDenominacion() +
+                "\n" + promocion.getDescripcionDescuento() +
+                "\n" + "Articulos: " + getCadenaArticulos(promocion.getArticulos()) +
+                "\n" + "Precio: " + promocion.getPrecioPromocional()));
+        pausarPrograma(4);
+        for (int i = 0; i < 50; i++) {
+            System.out.println(); //limpiar consola
+        }
+
+        System.out.println("Promoción 2:");
+        promocionMuestra = repoPromocion.findById(2L);
+        promocionMuestra.ifPresent(promocion -> System.out.println(promocion.getDenominacion() +
+                "\n" + promocion.getDescripcionDescuento() +
+                "\n" + "Articulos: " + getCadenaArticulos(promocion.getArticulos()) +
+                "\n" + "Precio: " + promocion.getPrecioPromocional()));
+        pausarPrograma(4);
+        for (int i = 0; i < 50; i++) {
+            System.out.println(); //limpiar consola
+        }
+
+        System.out.println("Promoción 3:");
+        promocionMuestra = repoPromocion.findById(3L);
+        promocionMuestra.ifPresent(promocion -> System.out.println(promocion.getDenominacion() +
+                "\n" + promocion.getDescripcionDescuento() +
+                "\n" + "Articulos: " + getCadenaArticulos(promocion.getArticulos()) +
+                "\n" + "Precio: " + promocion.getPrecioPromocional()));
+        pausarPrograma(4);
+        for (int i = 0; i < 50; i++) {
+            System.out.println(); //limpiar consola
+        }
+
+
+        System.out.println("Mostrando el dia y horario de la promoción verano....");
+        pausarPrograma(2);
+
+        Optional<Promocion> promoVerano = repoPromocion.findById(2L);
+        promoVerano.ifPresent(promocion -> System.out.println(promocion.getDenominacion() +
+                "\nDesde: " + promocion.getFechaDesde() +
+                "\nHasta: " + promocion.getFechaHasta() +
+                "\nHora inicio: " + promocion.getHoraDesde() +
+                "\nHora fin: " + promocion.getHoraHasta()));
+        pausarPrograma(4);
+        for (int i = 0; i < 50; i++) {
+            System.out.println(); //limpiar consola
+        }
+
+        System.out.println("Mostrando la promoción más económica....");
+        pausarPrograma(2);
+
+        repoPromocion.findById(idPromoEconomica).ifPresent(promocion -> {
+            System.out.println("La promoción más económica es: " + promocion.getDenominacion() +
+                    "\nPrecio: $" + promocion.getPrecioPromocional());
+        });
+        pausarPrograma(5);
 
 
 
 
 
+
+
+
+
+
+
+
+
+    }
+
+    public static void pausarPrograma(int segundos) {
+        try {
+            Thread.sleep(1000L * segundos);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static String getCadenaArticulos(HashSet<Articulo> articuloSet) {
+        String cadenaArticulos = "";
+        for (Articulo articulo : articuloSet) {
+            cadenaArticulos += articulo.getDenominacion() + " | ";
+        }
+        return cadenaArticulos;
     }
 
 }

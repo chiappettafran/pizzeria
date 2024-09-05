@@ -7,14 +7,15 @@ import java.time.LocalTime;
 import java.util.HashSet;
 
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString (exclude = "articulos")
 @Builder
 public class Promocion {
-    private long id;
-    private String deominacion;
+    private Long id;
+    private String denominacion;
     private LocalDate fechaDesde;
     private LocalDate fechaHasta;
     private LocalTime horaDesde;
