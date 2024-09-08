@@ -4,6 +4,8 @@ import repositories.InMemoryRepository;
 import java.awt.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.HashSet;
+import java.util.Optional;
 
 public class Main {
     public static void main(String[] args) {
@@ -270,5 +272,59 @@ public class Main {
         for (Promocion promocion : repositoryPromocion.findAll()){
             System.out.println(promocion.toString());
         }
+        System.out.println("- - - - - - Mostrando Articulos - - - - - -");
+        for (Articulo articulo : repositoryArticulo.findAll()){
+            System.out.println(articulo.toString());
+        }
+        System.out.println("- - - - - - Mostrando Promociones por Separado - - - - - -");
+        System.out.println("Promocion 1:");
+        Optional<Promocion> promocionOPT = repositoryPromocion.findById(1L);
+        promocionOPT.ifPresent(promocion -> System.out.println(promocion.getDenominacion()
+                + "\n" + promocion.getDescripcionDescuento()
+                + "\n" + "ARTICULOS: " + listaDeArticulosPromo(promocion.getArticulos())
+                + "\n" + "Precio: " + promocion.getPrecioPromocional()));
+
+        System.out.println("Promocion 2:");
+        promocionOPT = repositoryPromocion.findById(2L);
+        promocionOPT.ifPresent(promocion -> System.out.println(promocion.getDenominacion()
+                + "\n" + promocion.getDescripcionDescuento()
+                + "\n" + "ARTICULOS: " + listaDeArticulosPromo(promocion.getArticulos())
+                + "\n" + "Precio: " + promocion.getPrecioPromocional()));
+
+        System.out.println("Promocion 3:");
+        promocionOPT = repositoryPromocion.findById(3L);
+        promocionOPT.ifPresent(promocion -> System.out.println(promocion.getDenominacion()
+                + "\n" + promocion.getDescripcionDescuento()
+                + "\n" + "ARTICULOS: " + listaDeArticulosPromo(promocion.getArticulos())
+                + "\n" + "Precio: " + promocion.getPrecioPromocional()));
+
+        System.out.println("- - - - - - Mostrando el dia y horario de la promocion de verano - - - - - -");
+        Optional<Promocion> promoVerano = repositoryPromocion.findById(2L);
+        promoVerano.ifPresent(promocion -> System.out.println(promocion.getDenominacion()
+                + "\n * Desde: " + promocion.getFechaDesde()
+                + "\n * Hasta: " + promocion.getFechaHasta()
+                + "\n * Hora Inicio: " + promocion.getHoraDesde()
+                + "\n * Hora Fin: " + promocion.getHoraHasta()));
+
+        System.out.println("- - - - - - Mostrando Promocion mas Economica - - - - - -");
+
+        double precioPromocion = 0;
+        long idPromoEconomica = 0;
+        for (Promocion promocion : repositoryPromocion.findAll()) {
+            if (promocion.getPrecioPromocional() < precioPromocion || idPromoEconomica == 0){
+                precioPromocion = promocion.getPrecioPromocional();
+                idPromoEconomica = promocion.getId();
+            }
+        }
+        repositoryPromocion.findById(idPromoEconomica).ifPresent(promocion -> System.out.println("La promocion mas economica es: "
+        + promocion.getDenominacion()
+        + "\n Precio: $" + promocion.getPrecioPromocional()));
+    }
+    public static String listaDeArticulosPromo(HashSet<Articulo> articulos){
+        String devolucionArticulos = "";
+        for (Articulo articulo : articulos){
+            devolucionArticulos += articulo.getDenominacion() + " | ";
+        }
+        return devolucionArticulos;
     }
 }
