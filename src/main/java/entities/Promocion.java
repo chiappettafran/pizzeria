@@ -29,6 +29,6 @@ public class Promocion {
 
     @Builder.Default
     private Set<Articulo> articulos = new HashSet<>();
-
+    @Builder.Default
     private Set<Imagen> imagenes = new HashSet<>();
 }

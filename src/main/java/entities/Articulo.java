@@ -20,9 +20,10 @@ public class Articulo {
     private Double precioCompra;
     private Integer stockActual;
     private Integer stockMaximo;
+    private Imagen imagen;
 
-    @Builder.Default
-    private Set<Imagen> imagenes = new HashSet<>();
+//    @Builder.Default
+//    private Set<Imagen> imagenes = new HashSet<>();
 
     @Builder.Default
     private Set<Promocion> promociones = new HashSet<>();
